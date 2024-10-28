@@ -1,11 +1,13 @@
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { Alert } from "@/components/ui/alert";
+import { SidebarTrigger } from "@/components/ui/sidebar";
 
 export default function Home() {
   return (
     <div className="grid grid-rows-[auto_1fr_auto] items-center justify-items-center min-h-screen p-8 pb-20 gap-8 sm:p-20 font-sans">
-      <main className="flex flex-col gap-6 items-center sm:items-start">
+      <header className="w-full flex justify-between items-center">
+        <SidebarTrigger />
         <Image
           className="dark:invert"
           src="/next.svg"
@@ -14,7 +16,9 @@ export default function Home() {
           height={38}
           priority
         />
+      </header>
 
+      <main className="flex flex-col gap-6 items-center sm:items-start">
         <Alert className="max-w-md text-center sm:text-left" variant="info">
           Welcome to your new Next.js project! Get started by editing{" "}
           <code className="bg-gray-100 dark:bg-gray-800 px-1 py-0.5 rounded">

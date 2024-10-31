@@ -1,92 +1,37 @@
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
-import { Alert } from "@/components/ui/alert";
-import { SidebarTrigger } from "@/components/ui/sidebar";
+import Link from "next/link";
 
 export default function Home() {
   return (
-    <div className="grid grid-rows-[auto_1fr_auto] items-center justify-items-center min-h-screen p-8 pb-20 gap-8 sm:p-20 font-sans">
-      <header className="w-full flex justify-between items-center">
-        <SidebarTrigger />
+    <div className="relative min-h-screen flex flex-col items-center justify-center p-8 overflow-hidden">
+      <div className="absolute inset-0 z-0">
         <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
+          src="/welcome_background.png"
+          alt="Hospital Background"
+          layout="fill"
+          objectFit="cover"
+          className="opacity-20"
         />
-      </header>
-
-      <main className="flex flex-col gap-6 items-center sm:items-start">
-        <Alert className="max-w-md text-center sm:text-left" variant="info">
-          Welcome to your new Next.js project! Get started by editing{" "}
-          <code className="bg-gray-100 dark:bg-gray-800 px-1 py-0.5 rounded">
-            src/app/page.js
-          </code>{" "}
-          and see your changes instantly.
-        </Alert>
-
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <Button
-            as="a"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-            variant="primary"
-            size="lg"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy Now
-          </Button>
-          <Button
-            as="a"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-            variant="secondary"
-            size="lg"
-          >
-            Read Documentation
-          </Button>
+      </div>
+      <div className="z-10 text-center space-y-8 max-w-3xl">
+        <div className="mx-auto w-32 h-32 relative">
+          <Image
+            src="/logoIITJ.png"
+            alt="PHC IIT Jodhpur Logo"
+            layout="fill"
+          />
         </div>
-      </main>
-
-      <footer className="flex gap-4 flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 text-sm hover:underline"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image src="/file.svg" alt="File icon" width={16} height={16} />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 text-sm hover:underline"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image src="/window.svg" alt="Window icon" width={16} height={16} />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 text-sm hover:underline"
-          href="https://nextjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image src="/globe.svg" alt="Globe icon" width={16} height={16} />
-          Go to nextjs.org →
-        </a>
-      </footer>
+        <h1 className="text-4xl font-bold tracking-tighter sm:text-5xl md:text-6xl">
+          Welcome to PHC IIT Jodhpur
+        </h1>
+        <p className="text-xl text-muted-foreground">
+          Your trusted partner in healthcare management
+        </p>
+        <Button asChild size="lg" className="mt-8">
+          <Link href="/auth">Get Started</Link>
+        </Button>
+      </div>
     </div>
   );
 }

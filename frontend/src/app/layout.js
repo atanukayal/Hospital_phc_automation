@@ -1,6 +1,7 @@
 import localFont from "next/font/local";
 import "./globals.css";
 import React from "react";
+import { TranslationProvider } from "@/contexts/TranslationContext";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -24,7 +25,7 @@ export default function RootLayout({ children }) {
       <body
         className={`${geistSans.variable} ${geistMono.variable} font-sans antialiased`}
       >
-        {children}
+        <TranslationProvider>{children}</TranslationProvider>
       </body>
     </html>
   );

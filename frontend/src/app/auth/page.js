@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import {
   Card,
@@ -40,6 +40,17 @@ export default function AuthPage() {
   const [progress, setProgress] = useState(0);
   const router = useRouter();
   const baseUrl = "http://localhost:8080/api";
+
+  useEffect(() => {
+    const token = localStorage.getItem("authToken");
+    const userType = localStorage.getItem("userType");
+    
+    if (token && userType) {
+      const dashboardRoute =
+          userType === "patient" ? "/patientdashboard" : "/doctordashboard";
+      router.push(dashboardRoute); // Redirect to dashboard
+    }
+  }, [router]); 
 
   const handleChange = (e) => {
     const { id, value } = e.target;

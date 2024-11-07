@@ -1,12 +1,15 @@
 import admin from 'firebase-admin';
-import { createRequire } from 'module';
+import { readFile } from 'fs/promises';
 
-const require = createRequire(import.meta.url);
-const serviceAccount = require('./firebaseServiceAccountKey.json');
+const serviceAccount = JSON.parse(
+  await readFile(new URL('./firebaseServiceAccountKey.json', import.meta.url))
+);
 
-admin.initializeApp({
-  credential: admin.credential.cert(serviceAccount),
-});
+if (!admin.apps.length) {
+  admin.initializeApp({
+    credential: admin.credential.cert(serviceAccount),
+  });
+}
 
 const db = admin.firestore();
 export { db };

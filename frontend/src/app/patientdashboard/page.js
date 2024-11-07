@@ -19,6 +19,17 @@ export default function PatientDashboard() {
     router.push("/");
   };
 
+  // Add to both dashboards
+const fetchMedicalHistory = async (patientId) => {
+  try {
+    const response = await axios.get(`${baseUrl}/medical-history/${patientId}`);
+    return response.data;
+  } catch (error) {
+    console.error('Error fetching medical history:', error);
+    return [];
+  }
+};
+
   const appointments = [
     { doctor: "Dr. Sarah Wilson", specialty: "Cardiologist", time: "10:00 AM", date: "2024-11-05" },
     { doctor: "Dr. Michael Chen", specialty: "Dentist", time: "2:30 PM", date: "2024-11-07" },
@@ -159,6 +170,15 @@ export default function PatientDashboard() {
               />
             </CardContent>
           </Card>
+
+          <Card>
+  <CardHeader>
+    <CardTitle>{t("medicalHistory")}</CardTitle>
+  </CardHeader>
+  <CardContent>
+    <MedicalHistoryView records={patientMedicalRecords} />
+  </CardContent>
+</Card>
         </div>
       </div>
     </div>

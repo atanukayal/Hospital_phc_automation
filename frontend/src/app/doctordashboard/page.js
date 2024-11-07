@@ -2,15 +2,28 @@
 
 import { useState } from "react";
 import { useTranslation } from "@/contexts/TranslationContext";
-import { useRouter } from 'next/navigation';
+import { useRouter } from "next/navigation";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import {Dialog, DialogContent,  DialogHeader,DialogTitle, DialogTrigger,} from "@/components/ui/dialog";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Calendar } from "@/components/ui/calendar";
-import { Search, UserPlus, Calendar as CalendarIcon, ClipboardList, Settings } from "lucide-react";
+import {
+  Search,
+  UserPlus,
+  Calendar as CalendarIcon,
+  ClipboardList,
+  Settings,
+} from "lucide-react";
+import { FileText } from "lucide-react";
 
 export default function DoctorDashboard() {
   const { t } = useTranslation();
@@ -22,6 +35,33 @@ export default function DoctorDashboard() {
     localStorage.removeItem("userType");
     localStorage.removeItem("token");
     router.push("/");
+  };
+
+  // Add to both dashboards
+  const fetchMedicalHistory = async (patientId) => {
+    try {
+      const response = await axios.get(
+        `${baseUrl}/medical-history/${patientId}`
+      );
+      return response.data;
+    } catch (error) {
+      console.error("Error fetching medical history:", error);
+      return [];
+    }
+  };
+
+  // Add to doctor dashboard
+  const saveMedicalRecord = async (patientId, recordData) => {
+    try {
+      const response = await axios.post(
+        `${baseUrl}/medical-history/${patientId}`,
+        recordData
+      );
+      return response.data;
+    } catch (error) {
+      console.error("Error saving medical record:", error);
+      throw error;
+    }
   };
 
   const handleSearch = (e) => {
@@ -84,20 +124,42 @@ export default function DoctorDashboard() {
                     <Tabs defaultValue="info">
                       <TabsList>
                         <TabsTrigger value="info">{t("basicInfo")}</TabsTrigger>
-                        <TabsTrigger value="history">{t("medicalHistory")}</TabsTrigger>
+                        <TabsTrigger value="history">
+                          {t("medicalHistory")}
+                        </TabsTrigger>
                       </TabsList>
                       <TabsContent value="info">
                         <div className="space-y-2">
-                          <p><strong>{t("name")}:</strong> {selectedPatient.name}</p>
-                          <p><strong>{t("email")}:</strong> {selectedPatient.email}</p>
-                          <p><strong>{t("age")}:</strong> {selectedPatient.age}</p>
-                          <p><strong>{t("lastVisit")}:</strong> {selectedPatient.lastVisit}</p>
+                          <p>
+                            <strong>{t("name")}:</strong> {selectedPatient.name}
+                          </p>
+                          <p>
+                            <strong>{t("email")}:</strong>{" "}
+                            {selectedPatient.email}
+                          </p>
+                          <p>
+                            <strong>{t("age")}:</strong> {selectedPatient.age}
+                          </p>
+                          <p>
+                            <strong>{t("lastVisit")}:</strong>{" "}
+                            {selectedPatient.lastVisit}
+                          </p>
                         </div>
                       </TabsContent>
                       <TabsContent value="history">
                         <p>{t("medicalHistoryPlaceholder")}</p>
                       </TabsContent>
                     </Tabs>
+                    // In the DialogContent of patient details
+                    <Button
+                      onClick={() => {
+                        /* Show medical history sidebar */
+                      }}
+                      variant="outline"
+                    >
+                      <FileText className="mr-2 h-4 w-4" />
+                      View/Edit Medical History
+                    </Button>
                   </DialogContent>
                 </Dialog>
               )}
@@ -112,7 +174,8 @@ export default function DoctorDashboard() {
                 <UserPlus className="mr-2 h-4 w-4" /> {t("AddNewPatient")}
               </Button>
               <Button variant="outline">
-                <CalendarIcon className="mr-2 h-4 w-4" /> {t("ScheduleAppointment")}
+                <CalendarIcon className="mr-2 h-4 w-4" />{" "}
+                {t("ScheduleAppointment")}
               </Button>
               <Button variant="outline">
                 <ClipboardList className="mr-2 h-4 w-4" /> {t("MedicalRecords")}

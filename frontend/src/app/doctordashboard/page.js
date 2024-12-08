@@ -1,4 +1,4 @@
-"use client";
+"use client"; // add 
 
 import { useState } from "react";
 import { useTranslation } from "@/contexts/TranslationContext";
@@ -72,7 +72,7 @@ export default function DoctorDashboard() {
         name: "John Doe",
         email: "patient@example.com",
         age: 35,
-        lastVisit: "2023-05-15",
+        lastVisit: "2024-09-15",
       });
     } else {
       setSelectedPatient(null);
